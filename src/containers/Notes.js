@@ -59,6 +59,10 @@ export default function Notes() {
         });
     }
 
+    function deleteNote() {
+        return API.del("notez", `/notes/${id}`);
+    }
+
     async function handleSubmit(event) {
         let attachment;
 
@@ -100,6 +104,14 @@ export default function Notes() {
         }
 
         setIsDeleting(true);
+
+        try {
+            await deleteNote();
+            history.push("/");
+        } catch (e) {
+            onError(e);
+            setIsDeleting(false);
+        }
     }
 
     return (
